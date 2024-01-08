@@ -1,0 +1,20 @@
+{% extends 'trackify/layout.html' %}
+
+{% block body %}
+
+    <h2>Register</h2>
+
+    <div>
+        <form class="form-control" action="" method="post">
+            <input type="text" name="first_name" placeholder="Firstname">
+            <input type="text" name="last_name" placeholder="Lastname">
+            <input type="text" name="username" placeholder="Username">
+            <input type="email" name="email" id="" placeholder="Email">
+            <input type="password" name="password" id="" placeholder="Password">
+            <input type="password" name="confirm" placeholder="Confirm Password">
+            <button type="submit" class="btn btn-primary">Register</button>
+    
+        </form>
+    </div>
+
+{% endblock %}
