@@ -25,11 +25,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "widepen/login.html", {
+            return render(request, "trackify/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "widepen/login.html")
+        return render(request, "trackify/login.html")
 
 
 def logout_view(request):
@@ -48,13 +48,13 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "widepen/register.html", {
+            return render(request, "trackify/register.html", {
                 "message": "Passwords must match."
             })
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(
+            user = UserProfile.objects.create_user(
                 username,
                 email,
                 password, 
@@ -63,10 +63,10 @@ def register(request):
                 )
             user.save()
         except IntegrityError:
-            return render(request, "widepen/register.html", {
+            return render(request, "trackify/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "widepen/register.html")
+        return render(request, "trackify/register.html")
