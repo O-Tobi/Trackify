@@ -4,13 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from django.urls import reverse
-from trackify.models import UserProfile, Finance
+from trackify.models import User, UserProfile, Finance
 
 
 # Create your views here.
 
 def index(request):
-    pass
+    return render (request, 'trackify/index.html')
 
 def login_view(request):
     if request.method == "POST":
@@ -42,6 +42,7 @@ def register(request):
         firstname = request.POST["firstname"]
         lastname = request.POST["lastname"]
         username = request.POST["username"]
+        occupation = request.POST["occupation"] 
         email = request.POST["email"]
 
         # Ensure password matches confirmation
@@ -51,17 +52,24 @@ def register(request):
             return render(request, "trackify/register.html", {
                 "message": "Passwords must match."
             })
+        if User.objects.filter(username=username).exists():
+            return render(request, "trackify/register.html", {
+                "message": "Username already taken."
+            })
+        
+        user = User.objects.create_user(username='username', email='email@example.com', password='password')
 
         # Attempt to create new user
         try:
-            user = UserProfile.objects.create_user(
+            user_data = UserProfile.objects.create(
                 username,
                 email,
                 password, 
                 first_name=firstname, 
-                last_name=lastname
+                last_name=lastname,
+                occupation = occupation
                 )
-            user.save()
+            user_data.save()
         except IntegrityError:
             return render(request, "trackify/register.html", {
                 "message": "Username already taken."

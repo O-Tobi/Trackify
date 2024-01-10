@@ -5,7 +5,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=50, blank=False)
-    profile_picture = models.FileField(upload_to='profile_pic/', default='default_profile.jpg')
+    profile_picture = models.ImageField(upload_to='profile_pic/', default='default_profile.jpg')
     occupation = models.CharField(max_length=50, blank=False)
 
     def __str__(self):
