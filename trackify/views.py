@@ -26,7 +26,7 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "trackify/login.html", {
-                "message": "Invalid username and/or password."
+                "message": "Invalid email and/or password."
             })
     else:
         return render(request, "trackify/login.html")
@@ -53,16 +53,14 @@ def register(request):
                 "message": "Passwords must match."
             })
 
-        # Check for duplicate username
-        if NewUser.objects.filter(username=username).exists():
+        # Check for duplicate email
+        if NewUser.objects.filter(email=email).exists():
             return render(request, "trackify/register.html", {
-                "message": f"Username {username} already taken."
+                "message": f"Email {email} already taken."
             })
 
         # Attempt to create new user
-        user = NewUser.objects.create_user(username=username, email=email, password=password)
-        user.first_name = firstname
-        user.last_name = lastname
+        user = NewUser.objects.create_user(username=username, email=email, first_name=firstname, last_name=lastname, password=password)
         user.occupation = occupation
         user.save()
 

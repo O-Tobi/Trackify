@@ -49,6 +49,8 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
+    objects = CustomAccountManager()
+
     groups = models.ManyToManyField(
         Group,
         verbose_name=_('groups'),
